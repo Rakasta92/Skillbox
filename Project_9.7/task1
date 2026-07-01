@@ -1,0 +1,55 @@
+#include <iostream>
+#include <limits>
+
+int main() {
+  std::string departureTime, arrivalTime;
+  
+  std::cout << "Input departure time in 24-hours format (HH:MM): ";
+  std::cin >> departureTime;
+  std::cout << "Input arrival time in 24-hours format  (HH:MM): ";
+  std::cin >> arrivalTime;
+
+  // Проверка корректности ввода времени
+  if (std::cin.fail() || std::cin.peek() != '\n') {
+    std::cerr << "Input error!\n";
+    return 1;
+  }
+  
+  if (departureTime.length() != 5 || arrivalTime.length() != 5 ||
+      departureTime[2] != ':' || arrivalTime[2] != ':') {
+    std::cerr << "Incorrect time format. Please use HH:MM.\n";
+    return 1;
+  }
+
+  for (int i = 0; i < 5; i++) {
+    if (i != 2)  {
+      if (departureTime[i] < '0' || departureTime[i] > '9' || arrivalTime[i] < '0' || arrivalTime[i] > '9') {
+       std::cerr << "Incorrect time format. Enter the time in numeric format HH:MM.\n";
+       return 1;
+      }
+    }
+  }
+
+  // Извлечение часов и минут из строк
+  int departureHours = (departureTime[0] - '0') * 10 + (departureTime[1] - '0');
+  int departureMinutes = (departureTime[3]  - '0') * 10 + (departureTime[4]  - '0');
+  int arrivalHours = (arrivalTime[0]  - '0') * 10 + (arrivalTime[1]  - '0');
+  int arrivalMinutes = (arrivalTime[3]  - '0') * 10 + (arrivalTime[4]  - '0');
+  
+
+  // Проверка корректности времени
+  if (departureHours > 23 || departureMinutes > 59 || arrivalHours > 23 || arrivalMinutes > 59) {
+    std::cerr << "Incorrect time format. Enter the time in numeric format HH:MM.\n";
+    return 1;
+  }
+
+  // Вычисление времени в пути
+  int totalMinutes = (arrivalHours * 60 + arrivalMinutes) - (departureHours * 60 + departureMinutes);
+  if (totalMinutes < 0)  {
+    totalMinutes += 24 * 60; // Если прибытие на следующий день
+  }
+
+  std::cout << "Travel time: " << totalMinutes / 60 << " hours " << totalMinutes % 60 << " minutes.\n";
+    
+  return 0;
+}
