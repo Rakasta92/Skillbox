@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cctype>
+
+int main() {
+  std::string number;
+  int pointCount = 0;
+  int digitCount = 0;
+  bool errorFlag = false;
+  
+  std::cout << "====Task 2. Long float====\n";
+  std::cout << "Input number: ";
+  std::cin >> number;
+ 
+  // Проверка корректности ввода времени
+  if (std::cin.fail() || std::cin.peek() != '\n') {
+    std::cerr << "Input error!\n";
+    return 1;
+  }
+
+  if (number[0] == '-' || number[0] == '.' || isdigit(number[0])) {
+    for (int i = 0; i < number.length(); i++) {
+      if (isdigit(number[i]) == false && number[i] != '.' && number[i] != '-') errorFlag = true;
+      if (isdigit(number[i]) == false && number[i] != '.' && number[i] != '-') errorFlag = true;
+      if (number[i] == '-' && i != 0) errorFlag = true;
+      if (isdigit(number[i])) digitCount++;     
+      if (number[i] == '.') pointCount++;    
+    }
+  } else {
+    errorFlag = true;
+  }
+      
+  if (errorFlag == true || pointCount > 1 || digitCount == 0)  {
+    std::cout << "No\n";
+  } else {
+    std::cout << "Yes\n";
+  }
+      
+  return 0;
+}
