@@ -1,0 +1,100 @@
+#include <iostream>
+#include <limits>
+
+int main() {
+  std::string number;
+  std::string guess;
+  std::string tempGuess;
+  bool errorCheck;
+  int bulls = 0;
+  int cows = 0;
+  int attempts = 0;
+
+  std::cout << "====Task 4. Bulls and cows====\n";
+
+  //проверка правильности ввода
+  while (true) {
+    errorCheck = false;
+
+    std::cout << std::endl;
+    std::cout << "Input the desired number: ";
+    std::cin >> number;
+    if (number.length() != 4) {
+      std::cout << "Error! The number must be 4 digits long.\n";
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    } else {
+      for (int i = 0; i < number.length(); i++) {
+        if (number[i] < '0' || number[i] > '9')
+          errorCheck = true;
+      }
+      if (errorCheck) {
+        std::cout << "Error! The number must contain only digits.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      } else {
+        break;
+      }
+    }
+  }
+
+  //основной цикл программы
+  while (bulls != 4) {
+
+    //ввод числа для отгадывания
+    //проверка правильности ввода
+    while (true) {
+      errorCheck = false;
+
+      std::cout << std::endl;
+      std::cout << "Input the guess: ";
+      std::cin >> guess;
+      if (guess.length() != 4) {
+        std::cout << "Error! The number must be 4 digits long.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      } else {
+        for (int i = 0; i < guess.length(); i++) {
+          if (guess[i] < '0' || guess[i] > '9')
+            errorCheck = true;
+        }
+        if (errorCheck) {
+          std::cout << "Error! The number must contain only digits.\n";
+          std::cin.clear();
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+          break;
+        }
+      }
+    }
+
+    bulls = 0;
+    cows = 0;
+    tempGuess = guess;
+
+    //сравнение чисел
+    for (int i = 0; i < number.length(); i++) {
+      if (number[i] == guess[i]) {
+        bulls++;
+        tempGuess[i] = 'x';
+      } else {
+        for (int j = 0; j < number.length(); j++) {
+          if (number[i] == tempGuess[j]) {
+            cows++;
+            tempGuess[j] = 'x';
+            break;
+          }
+        }
+      }
+    }
+
+    std::cout << "Bulls: " << bulls << ", cows: " << cows << std::endl;
+    attempts++;
+  }
+
+  std::cout << "You win!" << std::endl;
+  std::cout << "Number of attempts: " << attempts << std::endl;
+  std::cout << "=====End of the program=====" << std::endl;
+
+  return 0;
+}
