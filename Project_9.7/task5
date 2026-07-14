@@ -1,0 +1,98 @@
+#include <iostream>
+
+int main() {
+  std::string romanNumeral;
+  int number;
+
+  std::cout << "====Task 5. Roman numerals====\n";
+  std::cout << "Input number (1 - 3999): ";
+  std::cin >> romanNumeral;
+
+  //проверка на ввод
+  if (std::cin.fail() || std::cin.peek() != '\n') {
+    std::cout << "\n<Wrong input! You can only enter numbers from 1 to 3999>\n";
+    return 0;
+  }
+  if (romanNumeral.length() > 4) {
+    std::cout << "\n<Wrong input! You can only enter numbers from 1 to 3999>\n";
+    return 0;
+  } else {
+    for (int i = 0; i < romanNumeral.length(); i++) {
+      if (romanNumeral[i] < '0' || romanNumeral[i] > '9') {
+        std::cout << "\n<Wrong input! You can only enter numbers from 1 to 3999>\n";
+        return 0;
+      }
+    }
+  }
+  
+  number = std::stoi(romanNumeral);
+  //обработка исключений
+  if (number > 3999 || number < 1) {
+    std::cout << "\n<Wrong input! You can only enter numbers from 1 to 3999>\n";
+    return 0;
+  }
+
+  // Выделение разрядов
+  int thousands = number / 1000;
+  int hundreds = (number % 1000) / 100;
+  int tens = (number % 100) / 10;
+  int ones = number % 10;
+
+  std::cout << "\n<Roman numerals>\n";
+
+  // Тысячи
+  for (int i = 0; i < thousands; ++i) {
+    std::cout << "M";
+  }
+
+  // Сотни
+  if (hundreds == 4) {
+    std::cout << "CD";
+  } else if (hundreds == 9) {
+    std::cout << "CM";
+  } else if (hundreds >= 5) {
+    std::cout << "D";
+    for (int i = 0; i < hundreds - 5; ++i) {
+      std::cout << "C";
+    }
+  } else if (hundreds > 0) {
+    for (int i = 0; i < hundreds; ++i) {
+      std::cout << "C";
+    }
+  }
+
+  // Десятки
+  if (tens == 4) {
+    std::cout << "XL";
+  } else if (tens == 9) {
+    std::cout << "XC";
+  } else if (tens >= 5) {
+    std::cout << "L";
+    for (int i = 0; i < tens - 5; ++i) {
+      std::cout << "X";
+    }
+  } else if (tens > 0) {
+    for (int i = 0; i < tens; ++i) {
+      std::cout << "X";
+    }
+  }
+
+  // Единицы
+  if (ones == 4) {
+    std::cout << "IV";
+  } else if (ones == 9) {
+    std::cout << "IX";
+  } else if (ones >= 5) {
+    std::cout << "V";
+    for (int i = 0; i < ones - 5; ++i) {
+      std::cout << "I";
+    }
+  } else if (ones > 0) {
+    for (int i = 0; i < ones; ++i) {
+      std::cout << "I";
+    }
+  }
+
+  std::cout << "\n";
+  return 0;
+}
